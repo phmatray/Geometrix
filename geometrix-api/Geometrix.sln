@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.Domain", "Geometrix.Domain\Geometrix.Domain.csproj", "{F25790B7-5578-47BF-8F6D-F65EB56B2D30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.Infrastructure", "Geometrix.Infrastructure\Geometrix.Infrastructure.csproj", "{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.Application", "Geometrix.Application\Geometrix.Application.csproj", "{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.WebApi", "Geometrix.WebApi\Geometrix.WebApi.csproj", "{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F25790B7-5578-47BF-8F6D-F65EB56B2D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25790B7-5578-47BF-8F6D-F65EB56B2D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25790B7-5578-47BF-8F6D-F65EB56B2D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25790B7-5578-47BF-8F6D-F65EB56B2D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB2CBB4A-D207-4676-B776-80106705C9CE}
+	EndGlobalSection
+EndGlobal
