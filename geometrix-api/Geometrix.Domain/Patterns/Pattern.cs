@@ -12,7 +12,7 @@ public class Pattern : IPattern
         CellGroupLength = cellGroupLength;
         IncludeEmptyAndFill = includeEmptyAndFill;
         Seed = seed;
-        Cells = new CellsCollection(cellGroupLength, includeEmptyAndFill).FillWithRandomCells(seed);
+        Cells = new CellsCollection(cellGroupLength).FillWithRandomCells(seed, includeEmptyAndFill);
 
         Expand();
     }
@@ -32,9 +32,11 @@ public class Pattern : IPattern
 
     public CellsCollection Cells { get; }
 
-    public int HorizontalCell => CellGroupLength * 2.Pow(MirrorPowerHorizontal);
+    public int HorizontalCell
+        => CellGroupLength * 2.Pow(MirrorPowerHorizontal);
 
-    public int VerticalCell => CellGroupLength * 2.Pow(MirrorPowerVertical);
+    public int VerticalCell 
+        => CellGroupLength * 2.Pow(MirrorPowerVertical);
 
     public Pattern Expand()
     {

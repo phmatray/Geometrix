@@ -6,15 +6,13 @@ namespace Geometrix.Domain.Cells;
 public sealed class CellsCollection : List<Cell>
 {
     private readonly int _cellGroupLength;
-    private readonly bool _includeEmptyAndFill;
 
-    public CellsCollection(int cellGroupLength, bool includeEmptyAndFill)
+    public CellsCollection(int cellGroupLength)
     {
         _cellGroupLength = cellGroupLength;
-        _includeEmptyAndFill = includeEmptyAndFill;
     }
 
-    public CellsCollection FillWithRandomCells(int seed)
+    public CellsCollection FillWithRandomCells(int seed, bool includeEmptyAndFill)
     {
         Random random = new(seed);
 
@@ -24,7 +22,7 @@ public sealed class CellsCollection : List<Cell>
         {
             for (int y = 0; y < _cellGroupLength; y++)
             {
-                var triangleDirection = TriangleDirection.CreateRandom(random, _includeEmptyAndFill);
+                var triangleDirection = TriangleDirection.CreateRandom(random, includeEmptyAndFill);
                 Cell cell = new(x, y, triangleDirection);
                 
                 Add(cell);

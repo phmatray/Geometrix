@@ -46,7 +46,7 @@ public sealed class ImageEditionService
 
     public void SetPolygon(Image<Rgba32> image, Color foreground, Polygon polygon)
     {
-        image.Mutate(context => FillPathExtensions.Fill(context, foreground, polygon));
+        image.Mutate(context => context.Fill(foreground, polygon));
     }
 
     public void SetBackground(Image<Rgba32> image, Color background)

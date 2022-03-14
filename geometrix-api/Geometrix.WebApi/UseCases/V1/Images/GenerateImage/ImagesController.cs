@@ -18,7 +18,6 @@ namespace Geometrix.WebApi.UseCases.V1.Images.GenerateImage;
 public sealed class ImagesController : ControllerBase, IOutputPort
 {
     private readonly Notification _notification;
-
     private IActionResult? _viewModel;
 
     public ImagesController(Notification notification)
