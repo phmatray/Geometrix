@@ -91,7 +91,7 @@ public static class SwaggerExtensions
                 {
                     string swaggerEndpoint;
 
-                    string basePath = configuration["ASPNETCORE_BASEPATH"];
+                    string? basePath = configuration["ASPNETCORE_BASEPATH"];
 
                     if (!string.IsNullOrEmpty(basePath))
                     {
