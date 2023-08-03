@@ -19,7 +19,7 @@ public class FileStorageService : IFileStorageService
 
     public async Task<string?> SaveFileAsync(byte[] dataArray, string nameWithoutExtension)
     {
-        string fileName = $"{nameWithoutExtension}.png";
+        var fileName = $"{nameWithoutExtension}.png";
         string path = Path.Combine(_env.ContentRootPath, "wwwroot", "images");
 
         if (!Directory.Exists(path))
@@ -41,16 +41,16 @@ public class FileStorageService : IFileStorageService
         fileStream.Seek(0, SeekOrigin.Begin);
 
         // Read and verify the data.
-        for (int i = 0; i < fileStream.Length; i++)
+        for (var i = 0; i < fileStream.Length; i++)
         {
-            if (dataArray[i] != fileStream.ReadByte())
-            {
-                _logger.LogError("Error writing data.");
-                return null;
-            }
+            if (dataArray[i] == fileStream.ReadByte())
+                continue;
+            
+            _logger.LogError("Error writing data");
+            return null;
         }
 
-        _logger.LogInformation("The data was written to {Name} and verified.", fileStream.Name);
+        _logger.LogInformation("The data was written to {Name} and verified", fileStream.Name);
         
         return fileName;
     }

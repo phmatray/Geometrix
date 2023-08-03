@@ -16,7 +16,7 @@ public static class AuthenticationExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        IFeatureManager featureManager = services
+        var featureManager = services
             .BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 

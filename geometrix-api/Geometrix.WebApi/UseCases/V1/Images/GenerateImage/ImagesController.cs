@@ -33,7 +33,7 @@ public sealed class ImagesController : ControllerBase, IOutputPort
 
     void IOutputPort.Ok(ImageDescription imageDescription, byte[] dataArray, string fileName)
     {
-        string fileLocation = $"{Request.Scheme}://{Request.Host}/images/{fileName}" ;
+        var fileLocation = $"{Request.Scheme}://{Request.Host}/images/{fileName}" ;
         _viewModel = Ok(new GenerateImageResponse(fileLocation, new ImageModel(imageDescription)));
     }
 

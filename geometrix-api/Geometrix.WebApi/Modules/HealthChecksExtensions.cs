@@ -35,7 +35,7 @@ public static class HealthChecksExtensions
         //    healthChecks.AddDbContextCheck<MangaContext>("MangaDbContext");
         //}
 
-        return services;
+        return healthChecks.Services;
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public static class HealthChecksExtensions
     {
         context.Response.ContentType = MediaTypeNames.Application.Json;
 
-        JObject json = new JObject(
+        var json = new JObject(
             new JProperty("status", result.Status.ToString()),
             new JProperty("results", new JObject(result.Entries.Select(pair =>
                 new JProperty(pair.Key, new JObject(

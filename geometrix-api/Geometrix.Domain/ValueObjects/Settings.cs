@@ -7,4 +7,4 @@ public record Settings(
 {
     public string Id =>
         $"{BackgroundColor.Value}-{ForegroundColor.Value}-{CellWidthPixel}";
-};
+}

@@ -39,6 +39,9 @@ public sealed class Startup
             .AddCustomCors()
             .AddProxy()
             .AddCustomDataProtection();
+
+        int servicesCount = services.Count;
+        Console.WriteLine($"Total services registered: {servicesCount}");
     }
 
     /// <summary>
@@ -66,7 +69,7 @@ public sealed class Startup
             .UseCustomCors()
             .UseCustomHttpMetrics()
             .UseRouting()
-            .UseVersionedSwagger(provider, Configuration, env)
+            .UseVersionedSwagger(provider, Configuration)
             .UseAuthentication()
             .UseAuthorization()
             .UseEndpoints(endpoints =>

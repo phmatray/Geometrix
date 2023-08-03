@@ -17,21 +17,21 @@ public static class LoggingExtensions
         {
             o.InvalidModelStateResponseFactory = actionContext =>
             {
-                ILogger<Startup> logger = actionContext
+                var logger = actionContext
                     .HttpContext
                     .RequestServices
                     .GetRequiredService<ILogger<Startup>>();
 
-                List<string> errors = actionContext.ModelState
+                var errors = actionContext.ModelState
                     .Values
                     .SelectMany(x => x.Errors)
                     .Select(x => x.ErrorMessage)
                     .ToList();
 
                 string jsonModelState = JsonSerializer.Serialize(errors);
-                logger.LogWarning("Invalid request.", jsonModelState);
+                logger.LogWarning("Invalid request @jsonModelState", jsonModelState);
 
-                ValidationProblemDetails problemDetails = new ValidationProblemDetails(actionContext.ModelState);
+                var problemDetails = new ValidationProblemDetails(actionContext.ModelState);
                 return new BadRequestObjectResult(problemDetails);
             };
         });

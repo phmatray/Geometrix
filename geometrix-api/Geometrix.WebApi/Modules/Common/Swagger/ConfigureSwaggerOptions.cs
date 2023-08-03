@@ -14,7 +14,7 @@ namespace Geometrix.WebApi.Modules.Common.Swagger;
 /// </remarks>
 public sealed class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 {
-    private const string UriString = "http://paulovich.net";
+    private const string UriString = "https://paulovich.net/";
 
     private const string UriString1 =
         "https://raw.githubusercontent.com/ivanpaulovich/clean-architecture-manga/master/README.md";
@@ -28,14 +28,14 @@ public sealed class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOption
     ///     The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger
     ///     documents.
     /// </param>
-    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this._provider = provider;
+    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => _provider = provider;
 
     /// <inheritdoc />
     public void Configure(SwaggerGenOptions options)
     {
         // add a swagger document for each discovered API version
         // note: you might choose to skip or document deprecated API versions differently
-        foreach (ApiVersionDescription description in this._provider.ApiVersionDescriptions)
+        foreach (ApiVersionDescription description in _provider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
@@ -43,7 +43,7 @@ public sealed class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOption
 
     private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
-        OpenApiInfo info = new OpenApiInfo
+        var info = new OpenApiInfo
         {
             Title = "Geometrix API",
             Version = description.ApiVersion.ToString(),

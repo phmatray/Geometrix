@@ -13,7 +13,7 @@ public sealed class Notification
     {
         get
         {
-            Dictionary<string, string[]> modelState = _errorMessages
+            var modelState = _errorMessages
                 .ToDictionary(item => item.Key, item => item.Value.ToArray());
 
             return modelState;

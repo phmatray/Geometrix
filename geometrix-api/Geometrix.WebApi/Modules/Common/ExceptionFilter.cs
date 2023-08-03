@@ -13,7 +13,7 @@ public sealed class ExceptionFilter : IExceptionFilter
     /// </summary>
     public void OnException(ExceptionContext context)
     {
-        ProblemDetails problemDetails = new ProblemDetails { Status = 500, Title = "Bad Request" };
+        var problemDetails = new ProblemDetails { Status = 500, Title = "Bad Request" };
 
         context.Result = new JsonResult(problemDetails);
         context.Exception = null!;

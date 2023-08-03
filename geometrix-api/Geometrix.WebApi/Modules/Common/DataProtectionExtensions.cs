@@ -14,7 +14,7 @@ public static class DataProtectionExtensions
     {
         services.AddDataProtection()
             .SetApplicationName("geometrix-api")
-            .PersistKeysToFileSystem(new DirectoryInfo(@"./"));
+            .PersistKeysToFileSystem(new DirectoryInfo("./"));
 
         return services;
     }

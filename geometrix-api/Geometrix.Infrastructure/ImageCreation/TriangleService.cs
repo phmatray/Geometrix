@@ -1,5 +1,4 @@
 ﻿using Geometrix.Domain.ValueObjects;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 
 namespace Geometrix.Infrastructure.ImageCreation;
@@ -20,7 +19,7 @@ public sealed class TriangleService
         };
     }
 
-    private Polygon CreateTopLeftTriangle(int x, int y, int cellWidthPixel)
+    private static Polygon CreateTopLeftTriangle(int x, int y, int cellWidthPixel)
     {
         return new Polygon(new List<ILineSegment>
         {
@@ -32,7 +31,7 @@ public sealed class TriangleService
         });
     }
 
-    private Polygon CreateTopRightTriangle(int x, int y, int cellWidthPixel)
+    private static Polygon CreateTopRightTriangle(int x, int y, int cellWidthPixel)
     {
         return new Polygon(new List<ILineSegment>
         {
@@ -44,7 +43,7 @@ public sealed class TriangleService
         });
     }
 
-    private Polygon CreateBottomLeftTriangle(int x, int y, int cellWidthPixel)
+    private static Polygon CreateBottomLeftTriangle(int x, int y, int cellWidthPixel)
     {
         return new Polygon(new List<ILineSegment>
         {
@@ -56,7 +55,7 @@ public sealed class TriangleService
         });
     }
 
-    private Polygon CreateBottomRightTriangle(int x, int y, int cellWidthPixel)
+    private static Polygon CreateBottomRightTriangle(int x, int y, int cellWidthPixel)
     {
         return new Polygon(new List<ILineSegment>
         {
@@ -68,7 +67,7 @@ public sealed class TriangleService
         });
     }
 
-    private Polygon CreateFilled(int x, int y, int cellWidthPixel)
+    private static Polygon CreateFilled(int x, int y, int cellWidthPixel)
     {
         return new Polygon(new List<ILineSegment>
         {

@@ -17,7 +17,7 @@ public sealed class CustomControllerFeatureProvider : IApplicationFeatureProvide
     /// <summary>
     ///     Custom Controller Feature Provider constructor.
     /// </summary>
-    public CustomControllerFeatureProvider(IFeatureManager featureManager) => this._featureManager = featureManager;
+    public CustomControllerFeatureProvider(IFeatureManager featureManager) => _featureManager = featureManager;
 
     /// <summary>
     ///     Populate Features.
@@ -35,16 +35,16 @@ public sealed class CustomControllerFeatureProvider : IApplicationFeatureProvide
                 }
 
                 CustomAttributeTypedArgument constructorArgument = customAttribute.ConstructorArguments.First();
-                if (!(constructorArgument.Value is IEnumerable arguments))
+                if (constructorArgument.Value is not IEnumerable arguments)
                 {
                     continue;
                 }
 
                 foreach (object? argumentValue in arguments)
                 {
-                    CustomAttributeTypedArgument typedArgument = (CustomAttributeTypedArgument)argumentValue!;
-                    CustomFeature typedArgumentValue = (CustomFeature)(int)typedArgument.Value!;
-                    bool isFeatureEnabled = this._featureManager
+                    var typedArgument = (CustomAttributeTypedArgument)argumentValue!;
+                    var typedArgumentValue = (CustomFeature)(int)typedArgument.Value!;
+                    bool isFeatureEnabled = _featureManager
                         .IsEnabledAsync(typedArgumentValue.ToString())
                         .ConfigureAwait(false)
                         .GetAwaiter()

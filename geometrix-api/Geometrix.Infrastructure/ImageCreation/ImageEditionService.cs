@@ -1,10 +1,7 @@
 ﻿using Geometrix.Domain.Patterns;
 using Geometrix.Domain.ValueObjects;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace Geometrix.Infrastructure.ImageCreation;
 
@@ -32,11 +29,11 @@ public sealed class ImageEditionService
         SetBackground(image, background);
         
         Color foreground = ConvertToSixLaborsColor(foregroundThemeColor);
-        List<Polygon> polygons = ConvertToPolygons(pattern, cellWidthPixel);
+        var polygons = ConvertToPolygons(pattern, cellWidthPixel);
         SetPolygons(image, foreground, polygons);
     }
 
-    public void SetPolygons(Image<Rgba32> image, Color foreground, List<Polygon> polygons)
+    private static void SetPolygons(Image<Rgba32> image, Color foreground, List<Polygon> polygons)
     {
         foreach (Polygon polygon in polygons)
         {
@@ -44,17 +41,17 @@ public sealed class ImageEditionService
         }
     }
 
-    public void SetPolygon(Image<Rgba32> image, Color foreground, Polygon polygon)
+    private static void SetPolygon(Image<Rgba32> image, Color foreground, Polygon polygon)
     {
         image.Mutate(context => context.Fill(foreground, polygon));
     }
 
-    public void SetBackground(Image<Rgba32> image, Color background)
+    private static void SetBackground(Image<Rgba32> image, Color background)
     {
         image.Mutate(context => context.BackgroundColor(background));
     }
 
-    public Color ConvertToSixLaborsColor(ThemeColor color)
+    private static Color ConvertToSixLaborsColor(ThemeColor color)
     {
         return color.Value switch
         {
@@ -71,7 +68,7 @@ public sealed class ImageEditionService
         };
     }
 
-    public List<Polygon> ConvertToPolygons(Pattern pattern, int cellWidthPixel)
+    private List<Polygon> ConvertToPolygons(Pattern pattern, int cellWidthPixel)
     {
         var polygons = from cell in pattern.Cells
             let x = cell.X * cellWidthPixel

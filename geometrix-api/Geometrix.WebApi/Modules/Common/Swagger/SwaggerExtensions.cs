@@ -29,7 +29,7 @@ public static class SwaggerExtensions
     /// </summary>
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
-        IFeatureManager featureManager = services
+        var featureManager = services
             .BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 
@@ -80,8 +80,7 @@ public static class SwaggerExtensions
     public static IApplicationBuilder UseVersionedSwagger(
         this IApplicationBuilder app,
         IApiVersionDescriptionProvider provider,
-        IConfiguration configuration,
-        IWebHostEnvironment env)
+        IConfiguration configuration)
     {
         app.UseSwagger();
         app.UseSwaggerUI(
@@ -89,18 +88,11 @@ public static class SwaggerExtensions
             {
                 foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
                 {
-                    string swaggerEndpoint;
-
                     string? basePath = configuration["ASPNETCORE_BASEPATH"];
 
-                    if (!string.IsNullOrEmpty(basePath))
-                    {
-                        swaggerEndpoint = $"{basePath}/swagger/{description.GroupName}/swagger.json";
-                    }
-                    else
-                    {
-                        swaggerEndpoint = $"/swagger/{description.GroupName}/swagger.json";
-                    }
+                    string swaggerEndpoint = !string.IsNullOrEmpty(basePath)
+                        ? $"{basePath}/swagger/{description.GroupName}/swagger.json"
+                        : $"/swagger/{description.GroupName}/swagger.json";
 
                     options.SwaggerEndpoint(swaggerEndpoint, description.GroupName.ToUpperInvariant());
                 }

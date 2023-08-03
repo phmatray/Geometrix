@@ -14,7 +14,7 @@ public static class FeatureFlagsExtensions
     {
         services.AddFeatureManagement(configuration);
 
-        IFeatureManager featureManager = services.BuildServiceProvider()
+        var featureManager = services.BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 
         services.AddMvc()

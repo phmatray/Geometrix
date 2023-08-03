@@ -18,9 +18,9 @@ public sealed class CellsCollection : List<Cell>
 
         Clear();
 
-        for (int x = 0; x < _cellGroupLength; x++)
+        for (var x = 0; x < _cellGroupLength; x++)
         {
-            for (int y = 0; y < _cellGroupLength; y++)
+            for (var y = 0; y < _cellGroupLength; y++)
             {
                 var triangleDirection = TriangleDirection.CreateRandom(random, includeEmptyAndFill);
                 Cell cell = new(x, y, triangleDirection);

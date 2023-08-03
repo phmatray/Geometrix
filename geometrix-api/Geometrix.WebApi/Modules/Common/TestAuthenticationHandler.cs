@@ -32,9 +32,9 @@ public sealed class TestAuthenticationHandler : AuthenticationHandler<Authentica
             new("id", "92b93e37-0995-4849-a7ed-149e8706d8ef")
         };
 
-        ClaimsIdentity identity = new(claims, this.Scheme.Name);
+        ClaimsIdentity identity = new(claims, Scheme.Name);
         ClaimsPrincipal principal = new(identity);
-        AuthenticationTicket ticket = new(principal, this.Scheme.Name);
+        AuthenticationTicket ticket = new(principal, Scheme.Name);
 
         return await Task.FromResult(AuthenticateResult.Success(ticket))
             .ConfigureAwait(false);

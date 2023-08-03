@@ -40,12 +40,12 @@ public class Pattern : IPattern
 
     public Pattern Expand()
     {
-        for (int currentPower = 1; currentPower <= MirrorPowerHorizontal; currentPower++)
+        for (var currentPower = 1; currentPower <= MirrorPowerHorizontal; currentPower++)
         {
             Cells.ExpandRight(currentPower);
         }
 
-        for (int currentPower = 1; currentPower <= MirrorPowerVertical; currentPower++)
+        for (var currentPower = 1; currentPower <= MirrorPowerVertical; currentPower++)
         {
             Cells.ExpandDown(currentPower);
         }
