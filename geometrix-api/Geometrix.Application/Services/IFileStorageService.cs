@@ -2,5 +2,8 @@
 
 public interface IFileStorageService
 {
-    Task<string?> SaveFileAsync(byte[] bytes, string nameWithoutExtension);
+    Task<string?> SaveFileAsync(
+        byte[] dataArray,
+        string nameWithoutExtension,
+        string extension);
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Geometrix.Infrastructure.FileStorage;
 
+[Obsolete("Use FileStorageServiceV2 instead")]
 public class FileStorageService : IFileStorageService
 {
     private readonly IHostEnvironment _env;
@@ -17,7 +18,10 @@ public class FileStorageService : IFileStorageService
         _logger = logger;
     }
 
-    public async Task<string?> SaveFileAsync(byte[] dataArray, string nameWithoutExtension)
+    public async Task<string?> SaveFileAsync(
+        byte[] dataArray,
+        string nameWithoutExtension,
+        string extension = "")
     {
         var fileName = $"{nameWithoutExtension}.png";
         string path = Path.Combine(_env.ContentRootPath, "wwwroot", "images");

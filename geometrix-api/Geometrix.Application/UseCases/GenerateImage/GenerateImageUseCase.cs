@@ -55,7 +55,7 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
             .CreateImageAsync(imageDescription);
 
         string? fileName = await _fileStorageService
-            .SaveFileAsync(bytes, imageDescription.Id);
+            .SaveFileAsync(bytes, imageDescription.Id, ".png");
 
         if (fileName is null)
         {

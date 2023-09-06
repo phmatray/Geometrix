@@ -44,7 +44,7 @@ public sealed class ImagesController : ControllerBase, IOutputPort
     [ApiConventionMethod(typeof(CustomApiConventions), nameof(CustomApiConventions.Post))]
     public async Task<IActionResult> GenerateImage(
         [FromServices] IGenerateImageUseCase useCase,
-        [FromForm][Required] bool includeEmptyAndFill,
+        [FromForm][Required] bool includeEmptyAndFill = true,
         [FromForm][Required] int seed = 42,
         [FromForm][Required] int mirrorPowerHorizontal = 2,
         [FromForm][Required] int mirrorPowerVertical = 2,

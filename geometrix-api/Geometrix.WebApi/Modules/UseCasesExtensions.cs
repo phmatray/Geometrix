@@ -23,7 +23,7 @@ public static class UseCasesExtensions
         services.AddScoped<TriangleService, TriangleService>();
         services.AddScoped<ImageEditionService, ImageEditionService>();
         
-        services.AddScoped<IFileStorageService, FileStorageService>();
+        services.AddScoped<IFileStorageService, FileStorageServiceV2>();
         services.AddScoped<IImageDescriptionFactory, EntityDescriptionFactory>();
         services.AddScoped<IImageCreation, ImageCreationService>();
 
