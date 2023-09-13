@@ -12,4 +12,8 @@
 		<ProjectReference Include="..\Geometrix.Domain\Geometrix.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="UseCases\GetImages\" />
+	</ItemGroup>
+
 </Project>

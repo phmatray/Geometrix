@@ -12,7 +12,7 @@ public sealed class CellsCollection : List<Cell>
         _cellGroupLength = cellGroupLength;
     }
 
-    public CellsCollection FillWithRandomCells(int seed, bool includeEmptyAndFill)
+    public void FillWithRandomCells(int seed, bool includeEmptyAndFill)
     {
         Random random = new(seed);
 
@@ -24,59 +24,37 @@ public sealed class CellsCollection : List<Cell>
             {
                 var triangleDirection = TriangleDirection.CreateRandom(random, includeEmptyAndFill);
                 Cell cell = new(x, y, triangleDirection);
-                
                 Add(cell);
             }
         }
-
-        return this;
     }
 
-    public CellsCollection ExpandRight(int currentPower)
+    public void ExpandRight(int currentPower)
     {
-        int cellsCount = Count;
+        var mirroredCells = new List<Cell>(Count);
+        mirroredCells.AddRange(this.Select(cell => CreateMirrorCell(cell, true, currentPower)));
 
-        for (var index = 0; index < cellsCount; index++)
-        {
-            (
-                int x,
-                int y,
-                TriangleDirection triangleDirection
-            ) = this[index];
-
-            x = -x + _cellGroupLength * 2.Pow(currentPower) - 1;
-
-            TriangleDirection mirrorDirection = TriangleDirection.MirrorRight(triangleDirection);
-
-            Cell mirrorCell = new(x, y, mirrorDirection);
-
-            Add(mirrorCell);
-        }
-
-        return this;
+        AddRange(mirroredCells);
     }
 
-    public CellsCollection ExpandDown(int currentPower)
+    public void ExpandDown(int currentPower)
     {
-        int cellsCount = Count;
+        var mirroredCells = new List<Cell>(Count);
+        mirroredCells.AddRange(this.Select(cell => CreateMirrorCell(cell, false, currentPower)));
 
-        for (var index = 0; index < cellsCount; index++)
-        {
-            (
-                int x,
-                int y,
-                TriangleDirection triangleDirection
-            ) = this[index];
+        AddRange(mirroredCells);
+    }
 
-            y = -y + _cellGroupLength * 2.Pow(currentPower) - 1;
+    private Cell CreateMirrorCell(Cell original, bool isRight, int currentPower)
+    {
+        int mirrorFactor = _cellGroupLength * 2.Pow(currentPower) - 1;
+        int x = isRight ? -original.X + mirrorFactor : original.X;
+        int y = isRight ? original.Y : -original.Y + mirrorFactor;
 
-            TriangleDirection mirrorDirection = TriangleDirection.MirrorDown(triangleDirection);
+        TriangleDirection triangleDirection = isRight
+            ? TriangleDirection.MirrorRight(original.TriangleDirection)
+            : TriangleDirection.MirrorDown(original.TriangleDirection);
 
-            Cell mirrorCell = new(x, y, mirrorDirection);
-
-            Add(mirrorCell);
-        }
-
-        return this;
+        return new Cell(x, y, triangleDirection);
     }
 }

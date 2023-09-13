@@ -12,8 +12,9 @@ public class Pattern : IPattern
         CellGroupLength = cellGroupLength;
         IncludeEmptyAndFill = includeEmptyAndFill;
         Seed = seed;
-        Cells = new CellsCollection(cellGroupLength).FillWithRandomCells(seed, includeEmptyAndFill);
-
+        Cells = new CellsCollection(cellGroupLength);
+        
+        Cells.FillWithRandomCells(seed, includeEmptyAndFill);
         Expand();
     }
 

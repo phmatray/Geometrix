@@ -47,13 +47,13 @@ public class FileStorageServiceV2 : IFileStorageService
         }
     }
 
-    private string GenerateUniquePath(string path, string fileName)
+    private static string GenerateUniquePath(string path, string fileName)
     {
         string fullPath = Path.Combine(path, fileName);
         if (!File.Exists(fullPath))
             return fullPath;
 
-        int counter = 1;
+        var counter = 1;
         while (File.Exists(Path.Combine(path,
                    $"{Path.GetFileNameWithoutExtension(fileName)} ({counter}){Path.GetExtension(fileName)}")))
         {

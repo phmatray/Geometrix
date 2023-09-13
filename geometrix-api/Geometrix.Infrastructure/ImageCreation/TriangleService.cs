@@ -5,6 +5,15 @@ namespace Geometrix.Infrastructure.ImageCreation;
 
 public sealed class TriangleService
 {
+    /// <summary>
+    ///     Get a triangle from a direction and a position.
+    /// </summary>
+    /// <param name="direction">The direction of the triangle.</param>
+    /// <param name="x">The x position of the triangle.</param>
+    /// <param name="y">The y position of the triangle.</param>
+    /// <param name="cellWidthPixel">The width of the cell in pixel.</param>
+    /// <returns>The triangle.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">direction</exception>
     public Polygon? GetTriangle(TriangleDirection direction, int x, int y, int cellWidthPixel)
     {
         return direction.Value switch
