@@ -24,19 +24,19 @@ public class FileStorageService : IFileStorageService
         string extension = "")
     {
         var fileName = $"{nameWithoutExtension}.png";
-        string path = Path.Combine(_env.ContentRootPath, "wwwroot", "images");
+        var path = Path.Combine(_env.ContentRootPath, "wwwroot", "images");
 
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
 
-        string fullFileLocation = Path.Combine(path, fileName);
+        var fullFileLocation = Path.Combine(path, fileName);
 
         await using var fileStream = new FileStream(fullFileLocation, FileMode.Create);
 
         // Write the data to the file, byte by byte.
-        foreach (byte b in dataArray)
+        foreach (var b in dataArray)
         {
             fileStream.WriteByte(b);
         }

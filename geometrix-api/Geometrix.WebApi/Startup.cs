@@ -40,7 +40,7 @@ public sealed class Startup
             .AddProxy()
             .AddCustomDataProtection();
 
-        int servicesCount = services.Count;
+        var servicesCount = services.Count;
         Console.WriteLine($"Total services registered: {servicesCount}");
     }
 

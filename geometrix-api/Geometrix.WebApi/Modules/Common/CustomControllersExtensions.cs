@@ -20,7 +20,7 @@ public static class CustomControllersExtensions
             .BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 
-        bool isErrorFilterEnabled = featureManager
+        var isErrorFilterEnabled = featureManager
             .IsEnabledAsync(nameof(CustomFeature.ErrorFilter))
             .ConfigureAwait(false)
             .GetAwaiter()

@@ -20,7 +20,7 @@ public static class AuthenticationExtensions
             .BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 
-        bool isEnabled = featureManager
+        var isEnabled = featureManager
             .IsEnabledAsync(nameof(CustomFeature.Authentication))
             .ConfigureAwait(false)
             .GetAwaiter()

@@ -18,7 +18,7 @@ public static class HealthChecksExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        IHealthChecksBuilder healthChecks = services.AddHealthChecks();
+        var healthChecks = services.AddHealthChecks();
 
         //IFeatureManager featureManager = services
         //    .BuildServiceProvider()

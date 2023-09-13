@@ -24,27 +24,27 @@ public sealed class CustomControllerFeatureProvider : IApplicationFeatureProvide
     /// </summary>
     public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
     {
-        for (int i = feature.Controllers.Count - 1; i >= 0; i--)
+        for (var i = feature.Controllers.Count - 1; i >= 0; i--)
         {
-            Type controller = feature.Controllers[i].AsType();
-            foreach (CustomAttributeData customAttribute in controller.CustomAttributes)
+            var controller = feature.Controllers[i].AsType();
+            foreach (var customAttribute in controller.CustomAttributes)
             {
                 if (customAttribute.AttributeType.FullName != typeof(FeatureGateAttribute).FullName)
                 {
                     continue;
                 }
 
-                CustomAttributeTypedArgument constructorArgument = customAttribute.ConstructorArguments.First();
+                var constructorArgument = customAttribute.ConstructorArguments.First();
                 if (constructorArgument.Value is not IEnumerable arguments)
                 {
                     continue;
                 }
 
-                foreach (object? argumentValue in arguments)
+                foreach (var argumentValue in arguments)
                 {
                     var typedArgument = (CustomAttributeTypedArgument)argumentValue!;
                     var typedArgumentValue = (CustomFeature)(int)typedArgument.Value!;
-                    bool isFeatureEnabled = _featureManager
+                    var isFeatureEnabled = _featureManager
                         .IsEnabledAsync(typedArgumentValue.ToString())
                         .ConfigureAwait(false)
                         .GetAwaiter()

@@ -19,11 +19,7 @@ public sealed class ImageEditionService
         Pattern pattern,
         Settings settings)
     {
-        (
-            int cellWidthPixel,
-            ThemeColor backgroundThemeColor,
-            ThemeColor foregroundThemeColor
-        ) = settings;
+        var (cellWidthPixel, backgroundThemeColor, foregroundThemeColor) = settings;
 
         Color background = ConvertToSixLaborsColor(backgroundThemeColor);
         SetBackground(image, background);

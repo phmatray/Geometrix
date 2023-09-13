@@ -47,11 +47,11 @@ public sealed class CellsCollection : List<Cell>
 
     private Cell CreateMirrorCell(Cell original, bool isRight, int currentPower)
     {
-        int mirrorFactor = _cellGroupLength * 2.Pow(currentPower) - 1;
-        int x = isRight ? -original.X + mirrorFactor : original.X;
-        int y = isRight ? original.Y : -original.Y + mirrorFactor;
+        var mirrorFactor = _cellGroupLength * 2.Pow(currentPower) - 1;
+        var x = isRight ? -original.X + mirrorFactor : original.X;
+        var y = isRight ? original.Y : -original.Y + mirrorFactor;
 
-        TriangleDirection triangleDirection = isRight
+        var triangleDirection = isRight
             ? TriangleDirection.MirrorRight(original.TriangleDirection)
             : TriangleDirection.MirrorDown(original.TriangleDirection);
 

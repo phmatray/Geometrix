@@ -33,7 +33,7 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
         string backgroundColor,
         string foregroundColor)
     {
-        Pattern pattern = _imageDescriptionFactory
+        var pattern = _imageDescriptionFactory
             .NewPattern(
                 mirrorPowerHorizontal, mirrorPowerVertical, cellGroupLength,
                 includeEmptyAndFill, seed);
@@ -43,7 +43,7 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
             new ThemeColor(backgroundColor),
             new ThemeColor(foregroundColor));
 
-        ImageDescription imageDescription = _imageDescriptionFactory
+        var imageDescription = _imageDescriptionFactory
             .NewImage(pattern, imageConfiguration);
 
         return GeneratePng(imageDescription);
@@ -51,10 +51,10 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
 
     private async Task GeneratePng(ImageDescription imageDescription)
     {
-        byte[] bytes = await _imageCreationService
+        var bytes = await _imageCreationService
             .CreateImageAsync(imageDescription);
 
-        string? fileName = await _fileStorageService
+        var fileName = await _fileStorageService
             .SaveFileAsync(bytes, imageDescription.Id, ".png");
 
         if (fileName is null)

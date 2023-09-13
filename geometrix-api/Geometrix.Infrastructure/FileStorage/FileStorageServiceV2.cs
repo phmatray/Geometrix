@@ -25,14 +25,14 @@ public class FileStorageServiceV2 : IFileStorageService
         string extension = DefaultImageExtension)
     {
         var fileName = $"{nameWithoutExtension}{extension}";
-        string path = Path.Combine(_env.ContentRootPath, DefaultImageFolder);
+        var path = Path.Combine(_env.ContentRootPath, DefaultImageFolder);
 
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
 
-        string fullFileLocation = GenerateUniquePath(path, fileName);
+        var fullFileLocation = GenerateUniquePath(path, fileName);
 
         try
         {
@@ -49,7 +49,7 @@ public class FileStorageServiceV2 : IFileStorageService
 
     private static string GenerateUniquePath(string path, string fileName)
     {
-        string fullPath = Path.Combine(path, fileName);
+        var fullPath = Path.Combine(path, fileName);
         if (!File.Exists(fullPath))
             return fullPath;
 

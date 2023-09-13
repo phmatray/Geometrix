@@ -18,8 +18,8 @@ public static class SwaggerExtensions
     {
         get
         {
-            string basePath = PlatformServices.Default.Application.ApplicationBasePath;
-            string fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+            var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
             return Path.Combine(basePath, fileName);
         }
     }
@@ -33,7 +33,7 @@ public static class SwaggerExtensions
             .BuildServiceProvider()
             .GetRequiredService<IFeatureManager>();
 
-        bool isEnabled = featureManager
+        var isEnabled = featureManager
             .IsEnabledAsync(nameof(CustomFeature.Swagger))
             .ConfigureAwait(false)
             .GetAwaiter()
@@ -86,11 +86,11 @@ public static class SwaggerExtensions
         app.UseSwaggerUI(
             options =>
             {
-                foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+                foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    string? basePath = configuration["ASPNETCORE_BASEPATH"];
+                    var basePath = configuration["ASPNETCORE_BASEPATH"];
 
-                    string swaggerEndpoint = !string.IsNullOrEmpty(basePath)
+                    var swaggerEndpoint = !string.IsNullOrEmpty(basePath)
                         ? $"{basePath}/swagger/{description.GroupName}/swagger.json"
                         : $"/swagger/{description.GroupName}/swagger.json";
 

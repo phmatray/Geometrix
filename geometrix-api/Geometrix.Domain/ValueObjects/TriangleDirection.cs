@@ -71,7 +71,7 @@ public readonly struct TriangleDirection : IEquatable<TriangleDirection>
 
     public static TriangleDirection CreateRandom(Random random, bool includeEmptyAndFill)
     {
-        Direction direction = includeEmptyAndFill
+        var direction = includeEmptyAndFill
             ? (Direction) random.Next(6)
             : (Direction) (random.Next(4) + 1);
 

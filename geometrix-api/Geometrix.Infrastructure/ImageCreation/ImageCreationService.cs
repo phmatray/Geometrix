@@ -16,26 +16,16 @@ public sealed class ImageCreationService : IImageCreation
 
     public async Task<byte[]> CreateImageAsync(ImageDescription imageDescription)
     {
-        (
-            Pattern pattern,
-            Settings settings,
-            int imageWidthPixel,
-            int imageHeightPixel
-        ) = imageDescription;
-
+        var (pattern, settings, imageWidthPixel, imageHeightPixel) = imageDescription;
         using var image = new Image<Rgba32>(imageWidthPixel, imageHeightPixel);
-        
         _imageEdition.EditImage(image, pattern, settings);
-
         return await GetImageBytes(image);
     }
 
     public static async Task<byte[]> GetImageBytes(Image image)
     {
         await using var memory = new MemoryStream();
-
         await image.SaveAsPngAsync(memory);
-
         return memory.ToArray();
     }
 }

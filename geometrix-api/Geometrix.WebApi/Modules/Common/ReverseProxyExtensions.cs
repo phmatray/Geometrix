@@ -26,7 +26,7 @@ public static class ReverseProxyExtensions
     /// </summary>
     public static IApplicationBuilder UseProxy(this IApplicationBuilder app, IConfiguration configuration)
     {
-        string? basePath = configuration["ASPNETCORE_BASEPATH"];
+        var basePath = configuration["ASPNETCORE_BASEPATH"];
         if (!string.IsNullOrEmpty(basePath))
         {
             app.Use(async (context, next) =>

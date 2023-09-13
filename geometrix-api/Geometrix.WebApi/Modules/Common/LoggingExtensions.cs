@@ -28,7 +28,7 @@ public static class LoggingExtensions
                     .Select(x => x.ErrorMessage)
                     .ToList();
 
-                string jsonModelState = JsonSerializer.Serialize(errors);
+                var jsonModelState = JsonSerializer.Serialize(errors);
                 logger.LogWarning("Invalid request @jsonModelState", jsonModelState);
 
                 var problemDetails = new ValidationProblemDetails(actionContext.ModelState);
