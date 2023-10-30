@@ -32,7 +32,7 @@
 
 	<ItemGroup>
 		<!-- Third party -->
-		<PackageReference Include="prometheus-net.AspNetCore" Version="8.0.1" />
+		<PackageReference Include="prometheus-net.AspNetCore" Version="8.1.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="EPPlus.Core" Version="1.5.4" />
 		<!-- Decorator injection comparison https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection -->
