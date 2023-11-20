@@ -54,7 +54,7 @@ public static class AuthenticationExtensions
                     x.DefaultChallengeScheme = "Test";
                 })
                 .AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(
-                    "Test", options => { });
+                    "Test", _ => { });
         }
 
         return services;

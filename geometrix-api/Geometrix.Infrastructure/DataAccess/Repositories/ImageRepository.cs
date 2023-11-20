@@ -1,5 +1,3 @@
 ﻿namespace Geometrix.Infrastructure.DataAccess.Repositories;
 
-public sealed class ImageRepository
-{
-}
+public sealed class ImageRepository;

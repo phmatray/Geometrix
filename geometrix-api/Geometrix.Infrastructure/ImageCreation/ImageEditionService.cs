@@ -5,15 +5,8 @@ using SixLabors.ImageSharp.Drawing.Processing;
 
 namespace Geometrix.Infrastructure.ImageCreation;
 
-public sealed class ImageEditionService
+public sealed class ImageEditionService(TriangleService triangleService)
 {
-    private readonly TriangleService _triangleService;
-
-    public ImageEditionService(TriangleService triangleService)
-    {
-        _triangleService = triangleService;
-    }
-
     public void EditImage(
         Image<Rgba32> image,
         Pattern pattern,
@@ -37,15 +30,11 @@ public sealed class ImageEditionService
         }
     }
 
-    private static void SetPolygon(Image<Rgba32> image, Color foreground, Polygon polygon)
-    {
-        image.Mutate(context => context.Fill(foreground, polygon));
-    }
+    private static void SetPolygon(Image<Rgba32> image, Color foreground, Polygon polygon) 
+        => image.Mutate(context => context.Fill(foreground, polygon));
 
     private static void SetBackground(Image<Rgba32> image, Color background)
-    {
-        image.Mutate(context => context.BackgroundColor(background));
-    }
+        => image.Mutate(context => context.BackgroundColor(background));
 
     private static Color ConvertToSixLaborsColor(ThemeColor color)
         => color switch
@@ -63,22 +52,15 @@ public sealed class ImageEditionService
         };
 
     private List<Polygon> ConvertToPolygons(Pattern pattern, int cellWidthPixel)
-    {
-        // var polygons = from cell in pattern.Cells
-        //     let x = cell.X * cellWidthPixel
-        //     let y = cell.Y * cellWidthPixel
-        //     let direction = cell.TriangleDirection
-        //     select _triangleService.GetTriangle(direction, x, y, cellWidthPixel);
-        
-        return pattern.Cells
+        => pattern.Cells
             .Select(cell => new
             {
                 X = cell.X * cellWidthPixel,
                 Y = cell.Y * cellWidthPixel,
                 Direction = cell.TriangleDirection
             })
-            .Select(cell => _triangleService.GetTriangle(cell.Direction, cell.X, cell.Y, cellWidthPixel))
+            .Select(cell => triangleService.GetTriangle(cell.Direction, cell.X, cell.Y, cellWidthPixel))
             .Where(polygon => polygon is not null)
+            .Cast<Polygon>()
             .ToList();
-    }
 }

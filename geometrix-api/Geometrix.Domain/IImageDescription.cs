@@ -1,5 +1,3 @@
 ﻿namespace Geometrix.Domain;
 
-public interface IImageDescription
-{
-}
+public interface IImageDescription;

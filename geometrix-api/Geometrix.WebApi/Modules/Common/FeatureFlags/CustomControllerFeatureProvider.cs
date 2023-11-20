@@ -10,15 +10,9 @@ namespace Geometrix.WebApi.Modules.Common.FeatureFlags;
 /// <summary>
 ///     Custom Controller Feature Provider.
 /// </summary>
-public sealed class CustomControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+public sealed class CustomControllerFeatureProvider(IFeatureManager featureManager)
+    : IApplicationFeatureProvider<ControllerFeature>
 {
-    private readonly IFeatureManager _featureManager;
-
-    /// <summary>
-    ///     Custom Controller Feature Provider constructor.
-    /// </summary>
-    public CustomControllerFeatureProvider(IFeatureManager featureManager) => _featureManager = featureManager;
-
     /// <summary>
     ///     Populate Features.
     /// </summary>
@@ -27,35 +21,39 @@ public sealed class CustomControllerFeatureProvider : IApplicationFeatureProvide
         for (var i = feature.Controllers.Count - 1; i >= 0; i--)
         {
             var controller = feature.Controllers[i].AsType();
-            foreach (var customAttribute in controller.CustomAttributes)
-            {
-                if (customAttribute.AttributeType.FullName != typeof(FeatureGateAttribute).FullName)
-                {
-                    continue;
-                }
-
-                var constructorArgument = customAttribute.ConstructorArguments.First();
-                if (constructorArgument.Value is not IEnumerable arguments)
-                {
-                    continue;
-                }
-
-                foreach (var argumentValue in arguments)
-                {
-                    var typedArgument = (CustomAttributeTypedArgument)argumentValue!;
-                    var typedArgumentValue = (CustomFeature)(int)typedArgument.Value!;
-                    var isFeatureEnabled = _featureManager
-                        .IsEnabledAsync(typedArgumentValue.ToString())
-                        .ConfigureAwait(false)
-                        .GetAwaiter()
-                        .GetResult();
-
-                    if (!isFeatureEnabled)
-                    {
-                        feature.Controllers.RemoveAt(i);
-                    }
-                }
-            }
+            ProcessController(controller, feature, i);
         }
     }
+
+    private void ProcessController(Type controller, ControllerFeature feature, int index)
+    {
+        if (controller.CustomAttributes.Any(ShouldRemoveController))
+        {
+            feature.Controllers.RemoveAt(index);
+        }
+    }
+
+    private bool ShouldRemoveController(CustomAttributeData customAttribute)
+    {
+        if (customAttribute.AttributeType.FullName != typeof(FeatureGateAttribute).FullName)
+        {
+            return false;
+        }
+
+        var constructorArgument = customAttribute.ConstructorArguments.First();
+        if (constructorArgument.Value is not IEnumerable arguments)
+        {
+            return false;
+        }
+
+        return arguments.Cast<CustomAttributeTypedArgument>()
+            .Any(argument => !IsFeatureEnabled((CustomFeature)(int)argument.Value!));
+    }
+
+    private bool IsFeatureEnabled(CustomFeature feature)
+        => featureManager
+            .IsEnabledAsync(feature.ToString())
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
 }

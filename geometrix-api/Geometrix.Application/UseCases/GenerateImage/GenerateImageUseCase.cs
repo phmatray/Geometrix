@@ -1,27 +1,16 @@
 ﻿using Geometrix.Application.Services;
 using Geometrix.Domain;
-using Geometrix.Domain.Patterns;
 using Geometrix.Domain.ValueObjects;
 
 namespace Geometrix.Application.UseCases.GenerateImage;
 
-public sealed class GenerateImageUseCase : IGenerateImageUseCase
+public sealed class GenerateImageUseCase(
+    IImageCreation imageCreationService,
+    IFileStorageService fileStorageService,
+    IImageDescriptionFactory imageDescriptionFactory)
+    : IGenerateImageUseCase
 {
-    private readonly IImageCreation _imageCreationService;
-    private readonly IFileStorageService _fileStorageService;
-    private readonly IImageDescriptionFactory _imageDescriptionFactory;
-    private IOutputPort _outputPort;
-
-    public GenerateImageUseCase(
-        IImageCreation imageCreationService,
-        IFileStorageService fileStorageService,
-        IImageDescriptionFactory imageDescriptionFactory)
-    {
-        _imageCreationService = imageCreationService;
-        _fileStorageService = fileStorageService;
-        _imageDescriptionFactory = imageDescriptionFactory;
-        _outputPort = new GenerateImagePresenter();
-    }
+    private IOutputPort _outputPort = new GenerateImagePresenter();
 
     public Task Execute(
         int mirrorPowerHorizontal,
@@ -33,7 +22,7 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
         string backgroundColor,
         string foregroundColor)
     {
-        var pattern = _imageDescriptionFactory
+        var pattern = imageDescriptionFactory
             .NewPattern(
                 mirrorPowerHorizontal, mirrorPowerVertical, cellGroupLength,
                 includeEmptyAndFill, seed);
@@ -43,7 +32,7 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
             new ThemeColor(backgroundColor),
             new ThemeColor(foregroundColor));
 
-        var imageDescription = _imageDescriptionFactory
+        var imageDescription = imageDescriptionFactory
             .NewImage(pattern, imageConfiguration);
 
         return GeneratePng(imageDescription);
@@ -51,10 +40,10 @@ public sealed class GenerateImageUseCase : IGenerateImageUseCase
 
     private async Task GeneratePng(ImageDescription imageDescription)
     {
-        var bytes = await _imageCreationService
+        var bytes = await imageCreationService
             .CreateImageAsync(imageDescription);
 
-        var fileName = await _fileStorageService
+        var fileName = await fileStorageService
             .SaveFileAsync(bytes, imageDescription.Id, ".png");
 
         if (fileName is null)
