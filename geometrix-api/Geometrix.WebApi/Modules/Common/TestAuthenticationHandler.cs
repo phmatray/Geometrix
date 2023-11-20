@@ -6,23 +6,28 @@ using Microsoft.Extensions.Options;
 namespace Geometrix.WebApi.Modules.Common;
 
 /// <summary>
+/// Test authentication handler.
 /// </summary>
 public sealed class TestAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     /// <summary>
+    /// Constructor.
     /// </summary>
-    /// <param name="options"></param>
-    /// <param name="logger"></param>
-    /// <param name="encoder"></param>
-    /// <param name="clock"></param>
-    public TestAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
-        UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+    /// <param name="options">The monitor.</param>
+    /// <param name="logger">The logger.</param>
+    /// <param name="encoder">The encoder.</param>
+    public TestAuthenticationHandler(
+        IOptionsMonitor<AuthenticationSchemeOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder)
+        : base(options, logger, encoder)
     {
     }
 
     /// <summary>
+    /// Handle authenticate async.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The authenticate result.</returns>
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         Claim[] claims =
