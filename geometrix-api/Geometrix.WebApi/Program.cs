@@ -16,6 +16,6 @@ public static class Program
 
     private static IHostBuilder CreateHostBuilder(string[] args)
         => Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hostContext, configApp) => { configApp.AddCommandLine(args); })
+            .ConfigureAppConfiguration((_, configApp) => { configApp.AddCommandLine(args); })
             .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 }

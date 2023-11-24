@@ -5,26 +5,18 @@ using Microsoft.Extensions.Logging;
 namespace Geometrix.Infrastructure.FileStorage;
 
 [Obsolete("Use FileStorageServiceV2 instead")]
-public class FileStorageService : IFileStorageService
+public class FileStorageService(
+    IHostEnvironment env,
+    ILogger<FileStorageService> logger)
+    : IFileStorageService
 {
-    private readonly IHostEnvironment _env;
-    private readonly ILogger<FileStorageService> _logger;
-
-    public FileStorageService(
-        IHostEnvironment env,
-        ILogger<FileStorageService> logger)
-    {
-        _env = env;
-        _logger = logger;
-    }
-
     public async Task<string?> SaveFileAsync(
         byte[] dataArray,
         string nameWithoutExtension,
         string extension = "")
     {
         var fileName = $"{nameWithoutExtension}.png";
-        var path = Path.Combine(_env.ContentRootPath, "wwwroot", "images");
+        var path = Path.Combine(env.ContentRootPath, "wwwroot", "images");
 
         if (!Directory.Exists(path))
         {
@@ -50,11 +42,11 @@ public class FileStorageService : IFileStorageService
             if (dataArray[i] == fileStream.ReadByte())
                 continue;
             
-            _logger.LogError("Error writing data");
+            logger.LogError("Error writing data");
             return null;
         }
 
-        _logger.LogInformation("The data was written to {Name} and verified", fileStream.Name);
+        logger.LogInformation("The data was written to {Name} and verified", fileStream.Name);
         
         return fileName;
     }
