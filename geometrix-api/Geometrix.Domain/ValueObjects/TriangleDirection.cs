@@ -1,13 +1,9 @@
 ﻿namespace Geometrix.Domain.ValueObjects;
 
-public readonly struct TriangleDirection : IEquatable<TriangleDirection>
+public readonly struct TriangleDirection(TriangleDirection.Direction value)
+    : IEquatable<TriangleDirection>
 {
-    public Direction Value { get; }
-
-    public TriangleDirection(Direction value)
-    {
-        Value = value;
-    }
+    public Direction Value { get; } = value;
 
     public override bool Equals(object? obj)
     {
