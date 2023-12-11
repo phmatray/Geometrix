@@ -1,12 +1,15 @@
 ﻿using Geometrix.Domain.ValueObjects;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 
 namespace Geometrix.Infrastructure.ImageCreation;
 
 public sealed class TriangleService
 {
+    private readonly TriangleFactory _triangleFactory = new();
+
     /// <summary>
-    ///     Get a triangle from a direction and a position.
+    /// Get a triangle from a direction and a position.
     /// </summary>
     /// <param name="direction">The direction of the triangle.</param>
     /// <param name="x">The x position of the triangle.</param>
@@ -16,69 +19,49 @@ public sealed class TriangleService
     /// <exception cref="ArgumentOutOfRangeException">direction</exception>
     public Polygon? GetTriangle(TriangleDirection direction, int x, int y, int cellWidthPixel)
     {
+        if (!Enum.IsDefined(typeof(TriangleDirection.Direction), direction.Value))
+        {
+            throw new ArgumentOutOfRangeException(nameof(direction), $"Invalid triangle direction: {direction}");
+        }
+
+        return direction.Value == TriangleDirection.Direction.None 
+            ? null 
+            : _triangleFactory.CreateTriangle(direction, x, y, cellWidthPixel);
+    }
+}
+
+public class TriangleFactory
+{
+    public Polygon CreateTriangle(TriangleDirection direction, int x, int y, int cellWidthPixel)
+    {
         return direction.Value switch
         {
-            TriangleDirection.Direction.None => null,
-            TriangleDirection.Direction.TopLeft => CreateTopLeftTriangle(x, y, cellWidthPixel),
-            TriangleDirection.Direction.TopRight => CreateTopRightTriangle(x, y, cellWidthPixel),
-            TriangleDirection.Direction.BottomLeft => CreateBottomLeftTriangle(x, y, cellWidthPixel),
-            TriangleDirection.Direction.BottomRight => CreateBottomRightTriangle(x, y, cellWidthPixel),
-            TriangleDirection.Direction.Filled => CreateFilled(x, y, cellWidthPixel),
-            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            TriangleDirection.Direction.TopLeft => CreateTriangle(new[] { (x, y), (x + cellWidthPixel, y), (x, y + cellWidthPixel) }),
+            TriangleDirection.Direction.TopRight => CreateTriangle(new[] { (x + cellWidthPixel, y), (x + cellWidthPixel, y + cellWidthPixel), (x, y) }),
+            TriangleDirection.Direction.BottomLeft => CreateTriangle(new[] { (x, y + cellWidthPixel), (x, y), (x + cellWidthPixel, y + cellWidthPixel) }),
+            TriangleDirection.Direction.BottomRight => CreateTriangle(new[] { (x + cellWidthPixel, y + cellWidthPixel), (x, y + cellWidthPixel), (x + cellWidthPixel, y) }),
+            TriangleDirection.Direction.Filled => CreateRectangle(x, y, cellWidthPixel),
+            _ => throw new ArgumentException("Invalid triangle direction", nameof(direction))
         };
     }
 
-    private static Polygon CreateTopLeftTriangle(int x, int y, int cellWidthPixel)
+    private Polygon CreateTriangle((int x, int y)[] points)
     {
-        return new Polygon(new List<ILineSegment>
+        var lineSegments = new List<ILineSegment>
         {
             new LinearLineSegment(
-                new PointF(x, y),
-                new PointF(x + cellWidthPixel, y),
-                new PointF(x, y + cellWidthPixel)
+                new PointF(points[0].x, points[0].y),
+                new PointF(points[1].x, points[1].y),
+                new PointF(points[2].x, points[2].y)
             )
-        });
+        };
+
+        return new Polygon(lineSegments);
     }
 
-    private static Polygon CreateTopRightTriangle(int x, int y, int cellWidthPixel)
+    private Polygon CreateRectangle(int x, int y, int cellWidthPixel)
     {
-        return new Polygon(new List<ILineSegment>
-        {
-            new LinearLineSegment(
-                new PointF(x + cellWidthPixel, y),
-                new PointF(x + cellWidthPixel, y + cellWidthPixel),
-                new PointF(x, y)
-            )
-        });
-    }
-
-    private static Polygon CreateBottomLeftTriangle(int x, int y, int cellWidthPixel)
-    {
-        return new Polygon(new List<ILineSegment>
-        {
-            new LinearLineSegment(
-                new PointF(x, y + cellWidthPixel),
-                new PointF(x, y),
-                new PointF(x + cellWidthPixel, y + cellWidthPixel)
-            )
-        });
-    }
-
-    private static Polygon CreateBottomRightTriangle(int x, int y, int cellWidthPixel)
-    {
-        return new Polygon(new List<ILineSegment>
-        {
-            new LinearLineSegment(
-                new PointF(x + cellWidthPixel, y + cellWidthPixel),
-                new PointF(x, y + cellWidthPixel),
-                new PointF(x + cellWidthPixel, y)
-            )
-        });
-    }
-
-    private static Polygon CreateFilled(int x, int y, int cellWidthPixel)
-    {
-        return new Polygon(new List<ILineSegment>
+        var lineSegments = new List<ILineSegment>
         {
             new LinearLineSegment(
                 new PointF(x, y),
@@ -86,6 +69,8 @@ public sealed class TriangleService
                 new PointF(x + cellWidthPixel, y + cellWidthPixel),
                 new PointF(x, y + cellWidthPixel)
             )
-        });
+        };
+
+        return new Polygon(lineSegments);
     }
 }

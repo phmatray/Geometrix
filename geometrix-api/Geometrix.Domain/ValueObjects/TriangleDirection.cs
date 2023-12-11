@@ -6,29 +6,19 @@ public readonly struct TriangleDirection(TriangleDirection.Direction value)
     public Direction Value { get; } = value;
 
     public override bool Equals(object? obj)
-    {
-        return obj is TriangleDirection other && Equals(other);
-    }
+        => obj is TriangleDirection other && Equals(other);
 
     public bool Equals(TriangleDirection other)
-    {
-        return Value == other.Value;
-    }
+        => Value == other.Value;
 
     public override int GetHashCode()
-    {
-        return (int) Value;
-    }
+        => (int) Value;
 
     public static bool operator ==(TriangleDirection left, TriangleDirection right)
-    {
-        return left.Equals(right);
-    }
+        => left.Equals(right);
 
     public static bool operator !=(TriangleDirection left, TriangleDirection right)
-    {
-        return !(left == right);
-    }
+        => !(left == right);
 
     public static readonly TriangleDirection None = new(Direction.None);
     public static readonly TriangleDirection TopLeft = new(Direction.TopLeft);
@@ -38,8 +28,7 @@ public readonly struct TriangleDirection(TriangleDirection.Direction value)
     public static readonly TriangleDirection Filled = new(Direction.Filled);
     
     public static TriangleDirection MirrorRight(TriangleDirection direction)
-    {
-        return direction.Value switch
+        => direction.Value switch
         {
             Direction.None => None,
             Direction.TopLeft => TopRight,
@@ -47,13 +36,11 @@ public readonly struct TriangleDirection(TriangleDirection.Direction value)
             Direction.BottomLeft => BottomRight,
             Direction.BottomRight => BottomLeft,
             Direction.Filled => Filled,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(direction))
         };
-    }
 
     public static TriangleDirection MirrorDown(TriangleDirection direction)
-    {
-        return direction.Value switch
+        => direction.Value switch
         {
             Direction.None => None,
             Direction.TopLeft => BottomLeft,
@@ -61,9 +48,8 @@ public readonly struct TriangleDirection(TriangleDirection.Direction value)
             Direction.BottomLeft => TopLeft,
             Direction.BottomRight => TopRight,
             Direction.Filled => Filled,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(direction))
         };
-    }
 
     public static TriangleDirection CreateRandom(Random random, bool includeEmptyAndFill)
     {

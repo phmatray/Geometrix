@@ -1,9 +1,12 @@
 ﻿namespace Geometrix.Application.UseCases.GenerateImage;
 
+/// <summary>
+/// Represents the use case for generating an image.
+/// </summary>
 public interface IGenerateImageUseCase
 {
     /// <summary>
-    ///     Executes the Use Case.
+    /// Executes the Use Case.
     /// </summary>
     /// <returns>Task.</returns>
     Task Execute(
@@ -17,7 +20,7 @@ public interface IGenerateImageUseCase
         string foregroundColor);
 
     /// <summary>
-    ///     Sets the Output Port.
+    /// Sets the Output Port.
     /// </summary>
     /// <param name="outputPort">Output Port</param>
     void SetOutputPort(IOutputPort outputPort);
