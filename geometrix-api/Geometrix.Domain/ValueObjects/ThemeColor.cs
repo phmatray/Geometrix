@@ -1,38 +1,24 @@
 ﻿namespace Geometrix.Domain.ValueObjects;
 
-public readonly struct ThemeColor : IEquatable<ThemeColor>
+public readonly struct ThemeColor(string value)
+    : IEquatable<ThemeColor>
 {
-    public string Value { get; }
+    public string Value { get; } = value;
 
-    public ThemeColor(string value)
-    {
-        Value = value;
-    }
-    
     public override bool Equals(object? obj)
-    {
-        return obj is ThemeColor o && Equals(o);
-    }
+        => obj is ThemeColor o && Equals(o);
 
     public bool Equals(ThemeColor other)
-    {
-        return Value == other.Value;
-    }
+        => Value == other.Value;
 
     public override int GetHashCode()
-    {
-        return HashCode.Combine(Value);
-    }
+        => HashCode.Combine(Value);
 
     public static bool operator ==(ThemeColor left, ThemeColor right)
-    {
-        return left.Equals(right);
-    }
+        => left.Equals(right);
 
     public static bool operator !=(ThemeColor left, ThemeColor right)
-    {
-        return !(left == right);
-    }
+        => !(left == right);
 
     /// <summary>
     ///     Light.

@@ -3,25 +3,17 @@ using Geometrix.Domain.ValueObjects;
 
 namespace Geometrix.Application.UseCases.GenerateImage;
 
-public sealed class GenerateImageValidationUseCase : IGenerateImageUseCase
+public sealed class GenerateImageValidationUseCase(
+    IGenerateImageUseCase useCase,
+    Notification notification)
+    : IGenerateImageUseCase
 {
-    private readonly IGenerateImageUseCase _useCase;
-    private readonly Notification _notification;
-    private IOutputPort _outputPort;
-
-    public GenerateImageValidationUseCase(
-        IGenerateImageUseCase useCase,
-        Notification notification)
-    {
-        _useCase = useCase;
-        _notification = notification;
-        _outputPort = new GenerateImagePresenter();
-    }
+    private IOutputPort _outputPort = new GenerateImagePresenter();
 
     public void SetOutputPort(IOutputPort outputPort)
     {
         _outputPort = outputPort;
-        _useCase.SetOutputPort(outputPort);
+        useCase.SetOutputPort(outputPort);
     }
 
     public async Task Execute(
@@ -36,31 +28,31 @@ public sealed class GenerateImageValidationUseCase : IGenerateImageUseCase
     {
         if (mirrorPowerHorizontal is < 1 or > 4)
         {
-            _notification
+            notification
                 .Add(nameof(mirrorPowerHorizontal), "MirrorPowerHorizontal is required.");
         }
      
         if (mirrorPowerVertical is < 1 or > 4)
         {
-            _notification
+            notification
                 .Add(nameof(mirrorPowerVertical), "MirrorPowerVertical is required.");
         }
 
         if (cellGroupLength is < 2 or > 8)
         {
-            _notification
+            notification
                 .Add(nameof(cellGroupLength), "CellGroupLength is required.");
         }
 
         if (cellWidthPixel is < 32 or > 256)
         {
-            _notification
+            notification
                 .Add(nameof(cellWidthPixel), "CellWidthPixel is required.");
         }
 
         if (seed is < 0 or > 100000)
         {
-            _notification
+            notification
                 .Add(nameof(seed), "Seed is required.");
         }
 
@@ -74,7 +66,7 @@ public sealed class GenerateImageValidationUseCase : IGenerateImageUseCase
             backgroundColor != ThemeColor.Purple.Value &&
             backgroundColor != ThemeColor.Pink.Value)
         {
-            _notification
+            notification
                 .Add(nameof(backgroundColor), "BackgroundColor is required.");
         }
 
@@ -88,17 +80,17 @@ public sealed class GenerateImageValidationUseCase : IGenerateImageUseCase
             foregroundColor != ThemeColor.Purple.Value &&
             foregroundColor != ThemeColor.Pink.Value)
         {
-            _notification
+            notification
                 .Add(nameof(backgroundColor), "ForegroundColor is required.");
         }
 
-        if (_notification.IsInvalid)
+        if (notification.IsInvalid)
         {
             _outputPort.Invalid();
             return;
         }
 
-        await _useCase
+        await useCase
             .Execute(
                 mirrorPowerHorizontal, mirrorPowerVertical, cellGroupLength,
                 cellWidthPixel, includeEmptyAndFill, seed,
