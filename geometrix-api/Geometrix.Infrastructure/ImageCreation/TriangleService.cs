@@ -1,4 +1,5 @@
 ﻿using Geometrix.Domain.ValueObjects;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 
 namespace Geometrix.Infrastructure.ImageCreation;

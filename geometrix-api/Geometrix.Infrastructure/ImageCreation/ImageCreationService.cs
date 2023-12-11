@@ -1,5 +1,7 @@
 ﻿using Geometrix.Application.Services;
 using Geometrix.Domain;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Geometrix.Infrastructure.ImageCreation;
 
