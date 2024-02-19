@@ -28,9 +28,9 @@ public sealed class GenerateImageUseCase(
                 includeEmptyAndFill, seed);
 
         var imageConfiguration = new Settings(
-            cellWidthPixel,
-            new ThemeColor(backgroundColor),
-            new ThemeColor(foregroundColor));
+            CellWidthPixel.From(cellWidthPixel),
+            ThemeColor.From(backgroundColor),
+            ThemeColor.From(foregroundColor));
 
         var imageDescription = imageDescriptionFactory
             .NewImage(pattern, imageConfiguration);

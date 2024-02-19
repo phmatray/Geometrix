@@ -11,4 +11,9 @@
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Intellenum" Version="1.0.0-beta.3" />
+	  <PackageReference Include="Vogen" Version="3.0.24" />
+	</ItemGroup>
+
 </Project>
