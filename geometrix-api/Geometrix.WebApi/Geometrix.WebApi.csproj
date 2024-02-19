@@ -49,6 +49,7 @@
 	  <Content Include="..\..\README.md">
 	    <Link>README.md</Link>
 	  </Content>
+	  <Content Remove="wwwroot\Images\4-42-T-2-2-dark-indigo-64 (1).png" />
 	</ItemGroup>
 
 </Project>

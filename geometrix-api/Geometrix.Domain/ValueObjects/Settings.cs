@@ -1,7 +1,7 @@
 ﻿namespace Geometrix.Domain.ValueObjects;
 
 public record Settings(
-    int CellWidthPixel,
+    CellWidthPixel CellWidthPixel,
     ThemeColor BackgroundColor,
     ThemeColor ForegroundColor)
 {

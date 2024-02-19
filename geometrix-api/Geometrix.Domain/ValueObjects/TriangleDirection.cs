@@ -1,78 +1,50 @@
-﻿namespace Geometrix.Domain.ValueObjects;
+﻿using Intellenum;
 
-public readonly struct TriangleDirection(TriangleDirection.Direction value)
-    : IEquatable<TriangleDirection>
+namespace Geometrix.Domain.ValueObjects;
+
+[Intellenum]
+[Member("None", 0)]
+[Member("TopLeft", 1)]
+[Member("TopRight", 2)]
+[Member("BottomLeft", 3)]
+[Member("BottomRight", 4)]
+[Member("Filled", 5)]
+public partial class TriangleDirection
 {
-    public Direction Value { get; } = value;
-
-    public override bool Equals(object? obj)
-        => obj is TriangleDirection other && Equals(other);
-
-    public bool Equals(TriangleDirection other)
-        => Value == other.Value;
-
-    public override int GetHashCode()
-        => (int) Value;
-
-    public static bool operator ==(TriangleDirection left, TriangleDirection right)
-        => left.Equals(right);
-
-    public static bool operator !=(TriangleDirection left, TriangleDirection right)
-        => !(left == right);
-
-    public static readonly TriangleDirection None = new(Direction.None);
-    public static readonly TriangleDirection TopLeft = new(Direction.TopLeft);
-    public static readonly TriangleDirection TopRight = new(Direction.TopRight);
-    public static readonly TriangleDirection BottomLeft = new(Direction.BottomLeft);
-    public static readonly TriangleDirection BottomRight = new(Direction.BottomRight);
-    public static readonly TriangleDirection Filled = new(Direction.Filled);
-    
     public static TriangleDirection MirrorRight(TriangleDirection direction)
-        => direction.Value switch
+    {
+        return direction.Value switch
         {
-            Direction.None => None,
-            Direction.TopLeft => TopRight,
-            Direction.TopRight => TopLeft,
-            Direction.BottomLeft => BottomRight,
-            Direction.BottomRight => BottomLeft,
-            Direction.Filled => Filled,
+            0 => None,
+            1 => TopRight,
+            2 => TopLeft,
+            3 => BottomRight,
+            4 => BottomLeft,
+            5 => Filled,
             _ => throw new ArgumentOutOfRangeException(nameof(direction))
         };
+    }
 
     public static TriangleDirection MirrorDown(TriangleDirection direction)
-        => direction.Value switch
+    {
+        return direction.Value switch
         {
-            Direction.None => None,
-            Direction.TopLeft => BottomLeft,
-            Direction.TopRight => BottomRight,
-            Direction.BottomLeft => TopLeft,
-            Direction.BottomRight => TopRight,
-            Direction.Filled => Filled,
+            0 => None,
+            1 => BottomLeft,
+            2 => BottomRight,
+            3 => TopLeft,
+            4 => TopRight,
+            5 => Filled,
             _ => throw new ArgumentOutOfRangeException(nameof(direction))
         };
+    }
 
     public static TriangleDirection CreateRandom(Random random, bool includeEmptyAndFill)
     {
         var direction = includeEmptyAndFill
-            ? (Direction) random.Next(6)
-            : (Direction) (random.Next(4) + 1);
+            ? random.Next(6)
+            : random.Next(4) + 1;
 
-        var triangleDirection = new TriangleDirection(direction);
-        return triangleDirection;
-    }
-
-    public override string ToString()
-    {
-        return $"{nameof(Value)}: {Value}";
-    }
-
-    public enum Direction
-    {
-        None = 0,
-        TopLeft = 1,
-        TopRight = 2,
-        BottomLeft = 3,
-        BottomRight = 4,
-        Filled = 5
+        return FromValue(direction);
     }
 }

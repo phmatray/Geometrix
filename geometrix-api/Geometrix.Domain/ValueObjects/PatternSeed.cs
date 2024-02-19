@@ -1,3 +1,4 @@
 ﻿namespace Geometrix.Domain.ValueObjects;
 
-public record PatternSeed(string Seed);
+[ValueObject<string>]
+public readonly partial struct PatternSeed;

@@ -17,7 +17,7 @@ public sealed class ImageModel
         CellGroupLength = imageDescription.Pattern.CellGroupLength;
         HorizontalCell = imageDescription.Pattern.HorizontalCell;
         VerticalCell = imageDescription.Pattern.VerticalCell;
-        CellWidthPixel = imageDescription.Settings.CellWidthPixel;
+        CellWidthPixel = imageDescription.Settings.CellWidthPixel.Value;
         BackgroundColor = imageDescription.Settings.BackgroundColor.Value;
         ForegroundColor = imageDescription.Settings.ForegroundColor.Value;
     }

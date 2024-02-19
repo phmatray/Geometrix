@@ -19,12 +19,7 @@ public sealed class TriangleService
     /// <exception cref="ArgumentOutOfRangeException">direction</exception>
     public Polygon? GetTriangle(TriangleDirection direction, int x, int y, int cellWidthPixel)
     {
-        if (!Enum.IsDefined(typeof(TriangleDirection.Direction), direction.Value))
-        {
-            throw new ArgumentOutOfRangeException(nameof(direction), $"Invalid triangle direction: {direction}");
-        }
-
-        return direction.Value == TriangleDirection.Direction.None 
+        return direction.Value == TriangleDirection.None.Value 
             ? null 
             : _triangleFactory.CreateTriangle(direction, x, y, cellWidthPixel);
     }
@@ -36,11 +31,11 @@ public class TriangleFactory
     {
         return direction.Value switch
         {
-            TriangleDirection.Direction.TopLeft => CreateTriangle(new[] { (x, y), (x + cellWidthPixel, y), (x, y + cellWidthPixel) }),
-            TriangleDirection.Direction.TopRight => CreateTriangle(new[] { (x + cellWidthPixel, y), (x + cellWidthPixel, y + cellWidthPixel), (x, y) }),
-            TriangleDirection.Direction.BottomLeft => CreateTriangle(new[] { (x, y + cellWidthPixel), (x, y), (x + cellWidthPixel, y + cellWidthPixel) }),
-            TriangleDirection.Direction.BottomRight => CreateTriangle(new[] { (x + cellWidthPixel, y + cellWidthPixel), (x, y + cellWidthPixel), (x + cellWidthPixel, y) }),
-            TriangleDirection.Direction.Filled => CreateRectangle(x, y, cellWidthPixel),
+            1 => CreateTriangle([(x, y), (x + cellWidthPixel, y), (x, y + cellWidthPixel)]),
+            2 => CreateTriangle([(x + cellWidthPixel, y), (x + cellWidthPixel, y + cellWidthPixel), (x, y)]),
+            3 => CreateTriangle([(x, y + cellWidthPixel), (x, y), (x + cellWidthPixel, y + cellWidthPixel)]),
+            4 => CreateTriangle([(x + cellWidthPixel, y + cellWidthPixel), (x, y + cellWidthPixel), (x + cellWidthPixel, y)]),
+            5 => CreateRectangle(x, y, cellWidthPixel),
             _ => throw new ArgumentException("Invalid triangle direction", nameof(direction))
         };
     }
