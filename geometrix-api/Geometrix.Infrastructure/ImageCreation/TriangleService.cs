@@ -40,7 +40,7 @@ public class TriangleFactory
         };
     }
 
-    private Polygon CreateTriangle((int x, int y)[] points)
+    private Polygon CreateTriangle(IList<(int x, int y)> points)
     {
         var lineSegments = new List<ILineSegment>
         {

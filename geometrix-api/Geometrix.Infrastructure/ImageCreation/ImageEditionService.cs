@@ -54,15 +54,15 @@ public sealed class ImageEditionService(TriangleService triangleService)
             _ => throw new ArgumentOutOfRangeException(nameof(color), color, null)
         };
 
-    private List<Polygon> ConvertToPolygons(Pattern pattern, int cellWidthPixel)
+    private List<Polygon> ConvertToPolygons(Pattern pattern, CellWidthPixel cellWidthPixel)
         => pattern.Cells
             .Select(cell => new
             {
-                X = cell.X * cellWidthPixel,
-                Y = cell.Y * cellWidthPixel,
+                X = cell.X * cellWidthPixel.Value,
+                Y = cell.Y * cellWidthPixel.Value,
                 Direction = cell.TriangleDirection
             })
-            .Select(cell => triangleService.GetTriangle(cell.Direction, cell.X, cell.Y, cellWidthPixel))
+            .Select(cell => triangleService.GetTriangle(cell.Direction, cell.X, cell.Y, cellWidthPixel.Value))
             .Where(polygon => polygon is not null)
             .Cast<Polygon>()
             .ToList();
