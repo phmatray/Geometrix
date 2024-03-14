@@ -1,21 +1,64 @@
-namespace Geometrix.WebApi;
+using Geometrix.WebApi.Modules;
+using Geometrix.WebApi.Modules.Common;
+using Geometrix.WebApi.Modules.Common.FeatureFlags;
+using Geometrix.WebApi.Modules.Common.Swagger;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Prometheus;
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var services = builder.Services;
+var env = builder.Environment;
 
-/// <summary>
-/// </summary>
-public static class Program
+// Add Aspire services.
+builder.AddServiceDefaults();
+
+// Add other services.
+services
+    .AddFeatureFlags(configuration) // should be the first one.
+    .AddInvalidRequestLogging()
+    .AddHealthChecks(configuration)
+    .AddAuthentication(configuration)
+    .AddVersioning()
+    .AddSwagger()
+    .AddUseCases()
+    .AddCustomControllers()
+    .AddCustomCors()
+    .AddProxy()
+    .AddCustomDataProtection();
+
+var servicesCount = services.Count;
+Console.WriteLine($"Total services registered: {servicesCount}");
+
+var app = builder.Build();
+
+if (env.IsDevelopment())
 {
-    /// <summary>
-    /// </summary>
-    /// <param name="args"></param>
-    public static void Main(string[] args)
-        => CreateHostBuilder(args).Build().Run();
-
-    private static IHostBuilder CreateHostBuilder(string[] args)
-        => Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((_, configApp) => { configApp.AddCommandLine(args); })
-            .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/api/V1/CustomError")
+        .UseHsts();
+}
+
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+app
+    .UseStaticFiles()
+    .UseProxy(configuration)
+    .UseHealthChecks()
+    .UseCustomCors()
+    .UseCustomHttpMetrics()
+    .UseRouting()
+    .UseVersionedSwagger(provider, configuration)
+    .UseAuthentication()
+    .UseAuthorization()
+    .UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+        endpoints.MapMetrics();
+    });
+
+
+app.Run();

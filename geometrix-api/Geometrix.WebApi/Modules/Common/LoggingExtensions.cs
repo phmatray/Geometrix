@@ -20,7 +20,7 @@ public static class LoggingExtensions
                 var logger = actionContext
                     .HttpContext
                     .RequestServices
-                    .GetRequiredService<ILogger<Startup>>();
+                    .GetRequiredService<ILogger<Program>>();
 
                 var errors = actionContext.ModelState
                     .Values

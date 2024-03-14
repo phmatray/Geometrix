@@ -11,6 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.Application", "Ge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrix.WebApi", "Geometrix.WebApi\Geometrix.WebApi.csproj", "{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrix.AppHost", "Geometrix.AppHost\Geometrix.AppHost.csproj", "{955A4249-1881-421D-AC8B-1EC2392F45C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrix.ServiceDefaults", "Geometrix.ServiceDefaults\Geometrix.ServiceDefaults.csproj", "{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{EE51241F-E13D-4464-9066-A2565BB461D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webapi", "webapi", "{9302F977-33C9-464E-8704-2908996983A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +41,27 @@ Global
 		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{955A4249-1881-421D-AC8B-1EC2392F45C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{955A4249-1881-421D-AC8B-1EC2392F45C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{955A4249-1881-421D-AC8B-1EC2392F45C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{955A4249-1881-421D-AC8B-1EC2392F45C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB2CBB4A-D207-4676-B776-80106705C9CE}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{955A4249-1881-421D-AC8B-1EC2392F45C6} = {EE51241F-E13D-4464-9066-A2565BB461D0}
+		{AEBF0D4F-7DCD-480F-98EE-BE047D1E4968} = {EE51241F-E13D-4464-9066-A2565BB461D0}
+		{09CD6A21-E2EE-4A3E-8A90-B8632BFA3F19} = {9302F977-33C9-464E-8704-2908996983A7}
+		{F25790B7-5578-47BF-8F6D-F65EB56B2D30} = {9302F977-33C9-464E-8704-2908996983A7}
+		{DA5C266C-BAA3-4D8D-A43E-D4FCEAD8CD42} = {9302F977-33C9-464E-8704-2908996983A7}
+		{B8B90FFE-91AE-492C-93AE-8DB114EB5C13} = {9302F977-33C9-464E-8704-2908996983A7}
 	EndGlobalSection
 EndGlobal
