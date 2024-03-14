@@ -43,6 +43,7 @@
 		<!-- Local -->
 		<ProjectReference Include="..\Geometrix.Application\Geometrix.Application.csproj" />
 		<ProjectReference Include="..\Geometrix.Infrastructure\Geometrix.Infrastructure.csproj" />
+		<ProjectReference Include="..\Geometrix.ServiceDefaults\Geometrix.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

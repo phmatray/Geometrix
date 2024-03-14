@@ -19,7 +19,7 @@ public static class SwaggerExtensions
         get
         {
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-            var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+            var fileName = typeof(Program).GetTypeInfo().Assembly.GetName().Name + ".xml";
             return Path.Combine(basePath, fileName);
         }
     }
