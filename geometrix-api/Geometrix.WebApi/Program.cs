@@ -44,6 +44,9 @@ else
 
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
+// Redirect root to Swagger
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
 app
     .UseStaticFiles()
     .UseProxy(configuration)
