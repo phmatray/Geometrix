@@ -33,7 +33,7 @@
 		<!-- Third party -->
 		<PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.3" />
-		<PackageReference Include="Microsoft.OpenApi" Version="2.0.0" />
+		<PackageReference Include="Microsoft.OpenApi" Version="2.4.1" />
 		<PackageReference Include="EPPlus.Core" Version="1.5.4" />
 		<!-- Decorator injection comparison https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection -->
 		<PackageReference Include="Scrutor" Version="7.0.0" />
