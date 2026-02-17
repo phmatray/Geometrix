@@ -13,32 +13,30 @@ function resolveImageUrl(fileLocation) {
   return `${API_BASE}${fileLocation}`
 }
 
+// These values must match the ThemeColor value object on the API side.
+// Any value outside this list will cause a 400 validation error.
 const BG_COLORS = [
   { value: 'dark', label: 'Dark', hex: '#111118' },
-  { value: 'black', label: 'Black', hex: '#000000' },
-  { value: 'white', label: 'White', hex: '#ffffff' },
   { value: 'light', label: 'Light', hex: '#f0f0f8' },
-  { value: 'gray', label: 'Gray', hex: '#6b7280' },
-  { value: 'slate', label: 'Slate', hex: '#334155' },
-  { value: 'navy', label: 'Navy', hex: '#1e3a5f' },
-  { value: 'midnight', label: 'Midnight', hex: '#0f0f23' },
+  { value: 'red', label: 'Red', hex: '#ef4444' },
+  { value: 'yellow', label: 'Yellow', hex: '#eab308' },
+  { value: 'green', label: 'Green', hex: '#22c55e' },
+  { value: 'blue', label: 'Blue', hex: '#3b82f6' },
+  { value: 'indigo', label: 'Indigo', hex: '#6366f1' },
+  { value: 'purple', label: 'Purple', hex: '#a855f7' },
+  { value: 'pink', label: 'Pink', hex: '#ec4899' },
 ]
 
 const FG_COLORS = [
   { value: 'indigo', label: 'Indigo', hex: '#6366f1' },
   { value: 'purple', label: 'Purple', hex: '#a855f7' },
   { value: 'blue', label: 'Blue', hex: '#3b82f6' },
-  { value: 'cyan', label: 'Cyan', hex: '#06b6d4' },
-  { value: 'teal', label: 'Teal', hex: '#14b8a6' },
   { value: 'green', label: 'Green', hex: '#22c55e' },
-  { value: 'emerald', label: 'Emerald', hex: '#10b981' },
   { value: 'yellow', label: 'Yellow', hex: '#eab308' },
-  { value: 'orange', label: 'Orange', hex: '#f97316' },
   { value: 'red', label: 'Red', hex: '#ef4444' },
   { value: 'pink', label: 'Pink', hex: '#ec4899' },
-  { value: 'rose', label: 'Rose', hex: '#f43f5e' },
-  { value: 'white', label: 'White', hex: '#ffffff' },
-  { value: 'gold', label: 'Gold', hex: '#f59e0b' },
+  { value: 'light', label: 'Light', hex: '#f0f0f8' },
+  { value: 'dark', label: 'Dark', hex: '#111118' },
 ]
 
 const defaultParams = {
