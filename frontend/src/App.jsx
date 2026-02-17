@@ -50,8 +50,9 @@ const defaultParams = {
   includeEmptyAndFill: true,
 }
 
+// API constraint: seed must be in range [1, 100000]
 function randomSeed() {
-  return Math.floor(Math.random() * 999999) + 1
+  return Math.floor(Math.random() * 100000) + 1
 }
 
 function SliderControl({ label, value, min, max, step = 1, onChange, description }) {
@@ -171,9 +172,10 @@ export default function App() {
   // clicking "Generate" right after "Randomize" always picks up the new seed.
   const generate = useCallback(async () => {
     const p = paramsRef.current
-    // Defensive fallback: if seed is missing or zero, generate one on the
-    // spot so the API never receives an empty/invalid seed.
-    const seed = (p.seed && Number(p.seed) > 0) ? Number(p.seed) : randomSeed()
+    // Defensive fallback: API accepts seed in [1, 100000].
+    // If the value is missing, zero, or out of range, generate a fresh one.
+    const rawSeed = Number(p.seed)
+    const seed = (rawSeed >= 1 && rawSeed <= 100000) ? rawSeed : randomSeed()
 
     setLoading(true)
     setError(null)
@@ -292,7 +294,7 @@ export default function App() {
                     type="number"
                     value={params.seed}
                     min={1}
-                    max={999999}
+                    max={100000}
                     onChange={e => setParam('seed', Number(e.target.value))}
                     className="seed-input"
                   />
@@ -308,7 +310,7 @@ export default function App() {
                 label="Horizontal Mirror Power"
                 value={params.mirrorPowerHorizontal}
                 min={1}
-                max={6}
+                max={4}
                 onChange={v => setParam('mirrorPowerHorizontal', v)}
                 description="Symmetry repetitions on the X axis"
               />
@@ -316,7 +318,7 @@ export default function App() {
                 label="Vertical Mirror Power"
                 value={params.mirrorPowerVertical}
                 min={1}
-                max={6}
+                max={4}
                 onChange={v => setParam('mirrorPowerVertical', v)}
                 description="Symmetry repetitions on the Y axis"
               />
@@ -326,15 +328,15 @@ export default function App() {
               <SliderControl
                 label="Cell Group Length"
                 value={params.cellGroupLength}
-                min={1}
-                max={10}
+                min={2}
+                max={8}
                 onChange={v => setParam('cellGroupLength', v)}
                 description="Number of cells per tile group"
               />
               <SliderControl
                 label="Cell Width (px)"
                 value={params.cellWidthPixel}
-                min={16}
+                min={32}
                 max={128}
                 step={8}
                 onChange={v => setParam('cellWidthPixel', v)}
