@@ -7,6 +7,7 @@ using Geometrix.WebApi.Modules.Common.FeatureFlags;
 using Geometrix.WebApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.FeatureManagement.Mvc;
 
 namespace Geometrix.WebApi.UseCases.V1.Images.GenerateImage;
@@ -37,7 +38,8 @@ public sealed class ImagesController : ControllerBase, IOutputPort
         _viewModel = Ok(new GenerateImageResponse(fileLocation, new ImageModel(imageDescription)));
     }
 
-    [Authorize]
+    [AllowAnonymous]
+    [EnableRateLimiting("images")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenerateImageResponse))]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(GenerateImageResponse))]
