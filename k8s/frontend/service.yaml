@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geometrix-ui
+  namespace: geometrix
+  labels:
+    app: geometrix-ui
+spec:
+  selector:
+    app: geometrix-ui
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  type: ClusterIP
