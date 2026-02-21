@@ -1,8 +1,15 @@
 # Geometrix
 
+[![.NET CI](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml)
+[![License](https://img.shields.io/github/license/phmatray/Geometrix)](LICENSE)
+
 Geometrix is a web API that generates geometric images based on user-defined parameters. It uses a combination of mirror power, cell group length, cell width pixel, seed, and color themes to create unique and visually appealing geometric patterns.
 
 ![A generated image](geometrix-api/Geometrix.WebApi/wwwroot/Images/4-42-F-2-2-dark-indigo-64.png)
+
+## 🚀 Live Demo
+
+Try the live API at: **[https://geometrix.garry-ai.cloud](https://geometrix.garry-ai.cloud)**
 
 ## Features
 
@@ -16,7 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - A suitable IDE such as JetBrains Rider or Visual Studio
 
 ### Installing
