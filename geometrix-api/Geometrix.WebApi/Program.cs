@@ -3,6 +3,7 @@ using Geometrix.WebApi.Modules.Common;
 using Geometrix.WebApi.Modules.Common.FeatureFlags;
 using Geometrix.WebApi.Modules.Common.Swagger;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.RateLimiting;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ services
     .AddInvalidRequestLogging()
     .AddHealthChecks(configuration)
     .AddAuthentication(configuration)
+    .AddCustomRateLimiting()
     .AddVersioning()
     .AddSwagger()
     .AddUseCases()
@@ -55,6 +57,7 @@ app
     .UseCustomHttpMetrics()
     .UseRouting()
     .UseVersionedSwagger(provider, configuration)
+    .UseRateLimiter()
     .UseAuthentication()
     .UseAuthorization()
     .UseEndpoints(endpoints =>
