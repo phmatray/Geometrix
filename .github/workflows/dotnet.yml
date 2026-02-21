@@ -19,10 +19,10 @@ jobs:
         dotnet-version: '10.0.x'
     
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore geometrix-api/Geometrix.sln
     
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build geometrix-api/Geometrix.sln --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      run: dotnet test geometrix-api/Geometrix.sln --configuration Release --no-build --verbosity normal
