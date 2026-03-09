@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Intellenum" Version="2.0.1" />
-	  <PackageReference Include="Vogen" Version="7.0.4" />
+	  <PackageReference Include="Vogen" Version="8.0.4" />
 	</ItemGroup>
 
 </Project>
