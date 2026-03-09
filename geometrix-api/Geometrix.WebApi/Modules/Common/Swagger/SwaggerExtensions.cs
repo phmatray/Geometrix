@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.FeatureManagement;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Geometrix.WebApi.Modules.Common.Swagger;
@@ -55,18 +55,9 @@ public static class SwaggerExtensions
                                 Name = "Authorization",
                                 Type = SecuritySchemeType.ApiKey
                             });
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
                         {
-                                {
-                                    new OpenApiSecurityScheme
-                                    {
-                                        Reference = new OpenApiReference
-                                        {
-                                            Type = ReferenceType.SecurityScheme, Id = "Bearer"
-                                        }
-                                    },
-                                    new string[] { }
-                                }
+                            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
                         });
                     });
         }
