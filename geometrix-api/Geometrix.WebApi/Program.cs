@@ -1,70 +1,33 @@
-using Geometrix.WebApi.Modules;
-using Geometrix.WebApi.Modules.Common;
-using Geometrix.WebApi.Modules.Common.FeatureFlags;
-using Geometrix.WebApi.Modules.Common.Swagger;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.RateLimiting;
-using Prometheus;
+using Geometrix.WebApi.Modules.AppModules;
+using TheAppManager.Startup;
 
-var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
-var services = builder.Services;
-var env = builder.Environment;
-
-// Add Aspire services.
-builder.AddServiceDefaults();
-
-// Add other services.
-services
-    .AddFeatureFlags(configuration) // should be the first one.
-    .AddInvalidRequestLogging()
-    .AddHealthChecks(configuration)
-    .AddAuthentication(configuration)
-    .AddCustomRateLimiting()
-    .AddVersioning()
-    .AddSwagger()
-    .AddUseCases()
-    .AddCustomControllers()
-    .AddCustomCors()
-    .AddProxy()
-    .AddCustomDataProtection();
-
-var servicesCount = services.Count;
-Console.WriteLine($"Total services registered: {servicesCount}");
-
-var app = builder.Build();
-
-if (env.IsDevelopment())
+AppManager.Start(args, modules =>
 {
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler("/api/V1/CustomError")
-        .UseHsts();
-}
-
-var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-
-// Redirect root to Swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
-
-app
-    .UseStaticFiles()
-    .UseProxy(configuration)
-    .UseHealthChecks()
-    .UseCustomCors()
-    .UseCustomHttpMetrics()
-    .UseRouting()
-    .UseVersionedSwagger(provider, configuration)
-    .UseRateLimiter()
-    .UseAuthentication()
-    .UseAuthorization()
-    .UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-        endpoints.MapMetrics();
-    });
-
-
-app.Run();
+    // Module order matters: it determines the order of ConfigureServices,
+    // ConfigureMiddleware, and ConfigureEndpoints calls.
+    //
+    // Services-only modules are listed first to match the original
+    // registration order. Modules with middleware are ordered to
+    // reproduce the original middleware pipeline exactly.
+    modules
+        // --- Services registration (order matches original Program.cs) ---
+        .Add<ServiceDefaultsModule>()       // builder.AddServiceDefaults()
+        .Add<FeatureFlagsModule>()           // AddFeatureFlags (must be first)
+        .Add<LoggingModule>()                // AddInvalidRequestLogging
+        .Add<VersioningModule>()             // AddVersioning
+        .Add<UseCasesModule>()              // AddUseCases
+        .Add<ControllersModule>()           // AddCustomControllers
+        .Add<DataProtectionModule>()        // AddCustomDataProtection
+        // --- Modules with both services and middleware ---
+        // Middleware order: ExceptionHandler > StaticFiles > Proxy > HealthChecks
+        //   > Cors > HttpMetrics > Routing > Swagger > RateLimiter > Auth > Endpoints
+        .Add<MiddlewarePipelineModule>()    // error handling, redirect, static files
+        .Add<ProxyModule>()                 // AddProxy + UseProxy
+        .Add<HealthChecksModule>()          // AddHealthChecks + UseHealthChecks
+        .Add<CorsModule>()                  // AddCustomCors + UseCustomCors
+        .Add<MetricsModule>()              // UseCustomHttpMetrics + MapMetrics
+        .Add<RoutingModule>()              // UseRouting + MapControllers
+        .Add<SwaggerModule>()             // AddSwagger + UseVersionedSwagger
+        .Add<RateLimitingModule>()        // AddCustomRateLimiting + UseRateLimiter
+        .Add<AuthenticationModule>();     // AddAuthentication + UseAuth + UseAuthz
+});
