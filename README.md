@@ -107,6 +107,50 @@ curl -X POST "https://geometrix.garry-ai.cloud/api/GenerateImage?theme=dark-indi
    - API: `http://localhost:5000`
    - Swagger UI: `http://localhost:5000/swagger`
 
+## 🧪 Usage
+
+Once the API is running (locally or via the live demo), generate a pattern with a `POST` request and save the returned PNG:
+
+```bash
+curl -X POST "http://localhost:5000/api/GenerateImage" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "mirrorPowerHorizontal": 4,
+    "mirrorPowerVertical": 4,
+    "cellGroupLength": 42,
+    "cellWidthPixel": 8,
+    "includeEmptyAndFill": true,
+    "seed": 12345,
+    "backgroundColor": "#1a1a2e",
+    "foregroundColor": "#16213e"
+  }' \
+  --output pattern.png
+```
+
+Or call it from .NET:
+
+```csharp
+using var client = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
+
+var response = await client.PostAsJsonAsync("/api/GenerateImage", new
+{
+    mirrorPowerHorizontal = 4,
+    mirrorPowerVertical = 4,
+    cellGroupLength = 42,
+    cellWidthPixel = 8,
+    includeEmptyAndFill = true,
+    seed = 12345,
+    backgroundColor = "#1a1a2e",
+    foregroundColor = "#16213e"
+});
+
+await using var stream = await response.Content.ReadAsStreamAsync();
+await using var file = File.Create("pattern.png");
+await stream.CopyToAsync(file);
+```
+
+See the [API Reference](#-api-reference) below for all parameters, or explore interactively via Swagger UI at `/swagger`.
+
 ## 📖 API Reference
 
 ### POST `/api/GenerateImage`
@@ -150,6 +194,16 @@ For full API documentation, visit the [Swagger UI](https://geometrix.garry-ai.cl
 - **NFT Art**: Algorithmic art generation for digital collectibles
 - **Design Inspiration**: Explore geometric pattern possibilities
 - **Data Visualization**: Visual representation of numeric data
+
+## 🗺️ Roadmap
+
+- [ ] Expand Swagger/OpenAPI documentation with richer examples per endpoint
+- [ ] Add more built-in color themes beyond the current set
+- [ ] Publish an official .NET client SDK/NuGet package for `GenerateImage`
+- [ ] Add new pattern algorithms beyond mirror/cellular symmetry
+- [ ] Harden CI (Qodana workflow) and keep dependencies current
+
+See the [open issues](https://github.com/phmatray/Geometrix/issues) for details and to propose new ideas.
 
 ## 🤝 Contributing
 
