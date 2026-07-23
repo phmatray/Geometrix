@@ -1,3 +1,5 @@
+![Geometrix banner](.github/banner.png)
+
 # Geometrix
 
 [![.NET CI](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml)
