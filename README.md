@@ -2,6 +2,26 @@
 
 # Geometrix
 
+<!-- portfolio-toc:start -->
+
+## Table of Contents
+
+- [🚀 Live Demo](#-live-demo)
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [🛠️ Tech Stack](#-tech-stack)
+- [📦 Getting Started](#-getting-started)
+- [🧪 Usage](#-usage)
+- [📖 API Reference](#-api-reference)
+- [🎨 Use Cases](#-use-cases)
+- [🗺️ Roadmap](#-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [🙏 Acknowledgments](#-acknowledgments)
+
+<!-- portfolio-toc:end -->
+
+
 [![.NET CI](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/phmatray/Geometrix/actions/workflows/dotnet.yml)
 [![License](https://img.shields.io/github/license/phmatray/Geometrix)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/phmatray/Geometrix?style=social)](https://github.com/phmatray/Geometrix/stargazers)
